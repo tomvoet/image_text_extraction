@@ -12,12 +12,16 @@ RUN corepack enable
 COPY . /app
 WORKDIR /app
 
+
 FROM base as build
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm build
 
+
 FROM base
+
 COPY --from=build /app/.output /app/.output
 EXPOSE $PORT
+
 CMD ["node", ".output/server/index.mjs"]

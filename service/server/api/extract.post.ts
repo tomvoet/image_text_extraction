@@ -5,7 +5,6 @@ import { hash } from "ohash"
 
 const location = "us-central1"
 const visionModel = 'gemini-1.0-pro-vision-001'
-// nitro storage layer + paas redis as cache
 
 export default defineEventHandler(async (event) => {
     const redis = useStorage("redis")
