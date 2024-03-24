@@ -1,5 +1,9 @@
 name: Build and Upload Docker Image
 
+permissions:
+  contents: read
+  packages: write
+
 on:
   push:
     branches:
