@@ -1,0 +1,25 @@
+- name: Update & upgrade apt packages
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Ensure docker repository key is added
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Ensure docker repository is added
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: Ensure docker and docker-compose are installed
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+
+- name: Restart docker service
+  service:
+    name: docker
+    state: restarted

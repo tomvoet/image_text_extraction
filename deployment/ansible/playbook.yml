@@ -1,0 +1,59 @@
+- name: Deploy resources to google cloud
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    # - name: Ask for project id
+    #   ansible.builtin.pause:
+    #     prompt: "Enter the project id: "
+    #   register: project_id
+    #   when: project_id is not defined
+    - name: Read service-account.json
+      ansible.builtin.set_fact:
+        service_account: "{{ lookup('ansible.builtin.file', '../service-account.json') | from_json }}"
+
+    - name: Get current username
+      local_action: command whoami
+      register: username
+
+    - name: Apply the terraform configuration
+      community.general.terraform:
+        project_path: "{{ playbook_dir }}/../terraform"
+        state: present
+        variables:
+          project_id: "{{ service_account.project_id }}"
+          user: "{{ username.stdout }}"
+      register: deployed_tf
+
+    - name: Save terraform outputs
+      set_fact:
+        terraform_outputs: "{{ deployed_tf.outputs }}"
+
+- name: Refresh inventory
+  hosts: localhost
+  connection: local
+  tasks:
+    - ansible.builtin.meta: refresh_inventory
+    - ansible.builtin.debug:
+        var: "{{ service_account }}"
+
+- name: Install dependencies to vm instance
+  hosts: host-vm
+  become: true
+  tasks:
+    - ansible.builtin.include_tasks:
+        file: tasks/dependencies.yml
+
+- name: Deploy the application
+  hosts: host-vm
+  become: true
+  vars:
+    container_name: image_text_extraction
+    container_image: ghcr.io/tomvoet/{{ container_name }}:latest
+  tasks:
+    - ansible.builtin.include_tasks:
+        file: tasks/deployment.yml
+
+
+
+
