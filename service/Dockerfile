@@ -23,5 +23,5 @@ FROM base
 
 COPY --from=build /app/.output /app/.output
 EXPOSE $PORT
-
+ENV NODE_ENV=production
 CMD ["node", ".output/server/index.mjs"]

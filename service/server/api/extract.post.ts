@@ -2,7 +2,6 @@ import { VertexAI, HarmCategory, HarmBlockThreshold } from "@google-cloud/vertex
 import { ExtractTextRequest } from "~/utils/types"
 import { hash } from "ohash"
 
-
 const location = "us-central1"
 const visionModel = 'gemini-1.0-pro-vision-001'
 
@@ -74,7 +73,7 @@ export default defineEventHandler(async (event) => {
                 role: "user",
                 parts: [
                     {
-                        text: "Read the text in this image."
+                        text: "Read the text in this image. Dont describe the image, just read the text. If there is no text, write 'No text found'. If the text is unreadable, write 'Unreadable text'."
                     },
                     {
                         inline_data: {

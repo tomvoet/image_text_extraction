@@ -14,12 +14,12 @@ export default defineNuxtConfig({
     "redis_password": "",
   },
   nitro: {
-    storage: {
+    devStorage: {
       redis: {
         driver: "redis",
-        port: process.env.NUXT_REDIS_PORT,
-        host: process.env.NUXT_REDIS_HOST,
-        password: process.env.NUXT_REDIS_PASSWORD,
+        port: 6379,
+        host: "localhost",
+        password: "password",
       }
     },
   },
