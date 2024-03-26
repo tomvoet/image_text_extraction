@@ -1,5 +1,7 @@
 <script setup lang="ts">
-
+useServerSeoMeta({
+  title: "Image Text Extraction"
+})
 </script>
 
 <template>
