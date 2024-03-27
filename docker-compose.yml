@@ -6,10 +6,18 @@ services:
       context: service
     ports:
       - "80:3000"
-    env_file:
-      - service/.env
+    # env_file:
+    #   - service/.env
     environment:
-      - REDIS_HOST=redis
+      - NUXT_PROJECT_ID=eastern-flight-415514
+      - NUXT_PRIVATE_KEY_ID=af4e1f5137df1bc165395d75a7e600d4e56b506d
+      - NUXT_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQChDb8Hm41+0vWq\n0y94Y5wGl7ABKz0baJaMJpQZRjM3ypoS7T0Spnkv1YGs59O2vIE/izBAtYwQ3hv7\n6rUV5FnRlvBACkBGQoPcKFLxhxxwYTtncDZWGbRuaOopEuaMTovSHhA7kxfdwQyZ\nPG8tKWkhjlZJhvmzxPq+kncxDyN/u/21R2i1tsdQ5FQ/QsUS9s3sFMW+PDdv5gPX\n8QgDbfTKRzmtoDmCrHNG+XEo2pq0Kzfiq9HbodyihfVebBh6XS6LJvfjlxuhzNY9\n896kOhV0FFKg+W+08sCY03P9HQ6uBHHg+e7AJXghFDnzRJOpBA3o+G0lzbFzxuM9\niXYDRSbzAgMBAAECggEAAusbFSsKuvqhlO+hVr9wIkE/nP3PKBh9YZ+AaB5OKxdY\nIbpEmyUT+whrCvh82/A1heXinw5cMgeE2qFnhxsPobw09UwehfqbcllZYMDaYnCr\n0BEhcd2ApPB5BPtRuuk13AI6UfD5x+efEh9hhyispHR0eGzzaojBaCoLWK14DLVO\nTgVEOquK0ckcVMLFA7YP7Mqyu5ImecnjXnmQDZ7ZJB305qgwKLjM0rQHtBsyMgqQ\n5QhMJ2MRU3pbDx8iW/q5K1k7d/vKuG9ldRGA2x1MQF1iVB7ToMe4p55YGXaGY2Lp\nTLl3t+rv23COr4Hm0N7Ij0k4Dp12THneA+SoKzXNbQKBgQDTTTxvypN+3I9iTL2K\nsAqT9KkMlgFwWDpqqIE8djHQ+ClBPRbcOledly0TKWbW/LoYsv6vButkxQqNk9eQ\nuSXNTrMVmMu+Cbi7my1WL9T4X67O8HqtYT0WH8lR++/eAHqW2zoqnb9gdP3rHBnH\nx6Vv0OaP+ZJN/auRFLY+mhZl5wKBgQDDH2VVnI402KDqGYQtV3H8LGNEjKFDM0VI\n/O/Zo5bCFURCKRfHXF+f+ynUDH58KXEiuMzR9fSp422uIrvuzqDadm6/70BsumwB\ns859SNMTDKvtWiYSVjTt1gc2LEUvoi921Wli7mY6Kv7R8tscVgF6ofceADHZrVtN\nlWeoI0t9FQKBgDLzjd47D+PoVV7TuGTH3FUfCuBxD3nCnJt5dGha69pC7NfBXlDO\ndLAYcxMKybSPjmRETStxVLOg29GV08YfDyF5l69ef8qcV4JNgdolgIo/sExQKpTC\nPNOn6IivYoC6xtS3mkgKb8pXi5700LaeyqKy0dXnzUKnJ4a9YtCnoT0DAoGBALy9\nRMcQHZpOpTBsqCc3u8FCqm7nXSHkmTNlvxgVnkF0UsdweljUKIdWavp7b2noqE/+\n09iQgi5HGJPlc0YnRv6qqqwr4HSLyufGpokXhVya2D9KASOhkacxbV5gajgOOL1I\n55zTn7zKVBx/PqTlKJ8XxjKV26KEhpnAWDkSkvWVAoGBAL7mx/qlYpSkdI1iNtzZ\nmVBL6YJM4H6V2h2hffgq9yD1FH2jWEArAbnqZ7tCrEcvYtR/32hz8cWl/6ZLiiZI\n+OIqpwi8W7f6r+g4HyeqKfkp2vzFFjPnGGr7dhme2xA5JIPYiRXyRwOWY5YROc6N\nu5OpvacS9Mt4QrvGp4QMWcrI\n-----END PRIVATE KEY-----\n
+      - NUXT_CLIENT_EMAIL=eastern-flight-415514@appspot.gserviceaccount.com
+      - NUXT_CLIENT_ID=103458644366194812806
+      - NUXT_UNIVERSE_DOMAIN=googleapis.com
+      - NUXT_REDIS_HOST=redis
+      - NUXT_REDIS_PORT=6379
+      - NUXT_REDIS_PASSWORD=password
 
   redis:
     image: redis:7.2.4-alpine

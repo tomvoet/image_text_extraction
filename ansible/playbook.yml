@@ -24,19 +24,20 @@
           project_id: "{{ service_account.project_id }}"
           user: "{{ username.stdout }}"
       register: deployed_tf
+    
+    - name: Save redis_instance_ip
+      ansible.builtin.set_fact:
+        redis_instance_ip: "{{ deployed_tf.outputs.redis_instance_ip.value }}"
 
-    - name: Save terraform outputs
-      set_fact:
-        terraform_outputs: "{{ deployed_tf.outputs }}"
+    - name: Save host_vm_ip
+      ansible.builtin.set_fact:
+        host_vm_ip: "{{ deployed_tf.outputs.host_vm_ip.value }}"
 
-- name: Refresh inventory
-  hosts: localhost
-  connection: local
-  tasks:
-    - ansible.builtin.meta: refresh_inventory
-    - ansible.builtin.debug:
-        var: "{{ service_account }}"
-
+    - name: Add host_vm to inventory
+      ansible.builtin.add_host:
+        name: "{{ host_vm_ip }}"
+        groups: host-vm
+ 
 - name: Install dependencies to vm instance
   hosts: host-vm
   become: true
@@ -52,8 +53,11 @@
     container_image: ghcr.io/tomvoet/{{ container_name }}:latest
   tasks:
     - ansible.builtin.include_tasks:
-        file: tasks/deployment.yml
-
-
+       file: tasks/deployment.yml
+  handlers:
+    - name: Restart Service
+      ansible.builtin.systemd:
+        name: "{{ container_name }}"
+        state: restarted
 
 
