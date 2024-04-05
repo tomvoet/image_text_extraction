@@ -2,9 +2,9 @@
 
 Create a service account with the following roles:
 - Service Networking Admin
-- Compute Network Admin
 - Cloud Memorystore Redis Admin
 - Vertex AI Service Agent
+- Compute Admin
 
 ## Deployment Steps
 
@@ -12,6 +12,9 @@ Create a service account with the following roles:
 2. Run the following commands inside the `/ansible` folder to deploy and set up the infrastructure:
 
 ```bash
-ansible-galaxy install -r requirements.yml
-ansible-playbook playbook.yml
+# Install the required roles
+$ ansible-galaxy install -r requirements.yml
+
+# Run the playbook
+$ ansible-playbook playbook.yml
 ```
