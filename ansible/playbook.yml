@@ -3,11 +3,6 @@
   connection: local
   gather_facts: false
   tasks:
-    # - name: Ask for project id
-    #   ansible.builtin.pause:
-    #     prompt: "Enter the project id: "
-    #   register: project_id
-    #   when: project_id is not defined
     - name: Read service-account.json
       ansible.builtin.set_fact:
         service_account: "{{ lookup('ansible.builtin.file', '../service-account.json') | from_json }}"
@@ -29,14 +24,20 @@
       ansible.builtin.set_fact:
         redis_instance_ip: "{{ deployed_tf.outputs.redis_instance_ip.value }}"
 
-    - name: Save host_vm_ip
+    - name: Save host_vm_ips
       ansible.builtin.set_fact:
-        host_vm_ip: "{{ deployed_tf.outputs.host_vm_ip.value }}"
+        host_vm_ips: "{{ deployed_tf.outputs.host_vm_ips.value }}"
 
-    - name: Add host_vm to inventory
+    - name: Save load_balancer_ip
+      ansible.builtin.set_fact:
+        load_balancer_ip: "{{ deployed_tf.outputs.load_balancer_ip.value }}"
+
+    - name: Add host_vm_ips to inventory
       ansible.builtin.add_host:
-        name: "{{ host_vm_ip }}"
+        name: "{{ item }}"
+        ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
         groups: host-vm
+      with_items: "{{ host_vm_ips }}"
  
 - name: Install dependencies to vm instance
   hosts: host-vm
@@ -60,4 +61,10 @@
         name: "{{ container_name }}"
         state: restarted
 
-
+- name: Print the load balancer IP
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - ansible.builtin.debug:
+        msg: "The load balancer IP is {{ load_balancer_ip }}"

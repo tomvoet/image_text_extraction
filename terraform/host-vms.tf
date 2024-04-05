@@ -1,12 +1,13 @@
 resource "google_compute_instance" "host_vm" {
-  name         = "host-vm"
+  count        = 2
+  name         = "host-vm-${count.index}"
   machine_type = "e2-micro"
   zone         = var.zone
 
   boot_disk {
     auto_delete = true
     device_name = "host-vm"
-    
+
     initialize_params {
       image = "projects/debian-cloud/global/images/debian-12-bookworm-v20240213"
       size  = 10
@@ -16,11 +17,11 @@ resource "google_compute_instance" "host_vm" {
     mode = "READ_WRITE"
   }
 
-  tags = ["http-server", "ssh-access", "redis-client"]
+  tags = ["ssh-access", "redis-client", "http-server"]
 
-  can_ip_forward = false
+  can_ip_forward      = false
   deletion_protection = false
-  enable_display = false
+  enable_display      = false
 
   labels = {
     google-ec-src = "terraform"

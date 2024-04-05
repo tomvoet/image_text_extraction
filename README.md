@@ -1,5 +1,9 @@
 ## Prerequisites
 
+**This only works on Linux / WSL, because of the path used in [host-vm.tf](./terraform/host-vm.tf)**
+
+---
+
 Create a service account with the following roles:
 - Service Networking Admin
 - Cloud Memorystore Redis Admin
@@ -18,3 +22,5 @@ $ ansible-galaxy install -r requirements.yml
 # Run the playbook
 $ ansible-playbook playbook.yml
 ```
+
+The playbook will then run for ~40 minutes and deploy and set up the infrastructure.
