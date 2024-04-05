@@ -1,0 +1,35 @@
+name: Build and Test Service
+
+permissions:
+  contents: read
+
+# run pnpm test in ./service
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: pnpm install
+        working-directory: ./service
+      - run: pnpm test
+        working-directory: ./service
+
+    
