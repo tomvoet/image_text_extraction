@@ -9,6 +9,7 @@ Create a service account with the following roles:
 - Cloud Memorystore Redis Admin
 - Vertex AI Service Agent
 - Compute Admin
+- Monitoring Admin
 
 ## Deployment Steps
 

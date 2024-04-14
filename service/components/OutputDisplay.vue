@@ -25,12 +25,11 @@ const { copy, copied } = useClipboard({ source: text })
             <div class="w-px h-7 mx-2 bg-gray-200 dark:bg-gray-700" />
             <UButton @click="copy(text)" size="sm" variant="ghost" color="gray" class="p-0 my-1 hover:bg-transparent"
                 :icon="copied ? 'i-heroicons-clipboard-document-check' : 'i-heroicons-clipboard-document'">{{ copied
-        ? 'Copied' :
-        'Copy' }}</UButton>
+                    ? 'Copied' :
+                'Copy' }}</UButton>
         </div>
     </div>
     <div v-else-if="loading">
-        <!--tailwind loading-->
         <div class="flex items-center justify-center w-full h-32">
             <div role="status">
                 <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-primary-500"

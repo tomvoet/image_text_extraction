@@ -1,0 +1,48 @@
+direction: down
+
+gcp: Google Cloud Platform (GCP) {
+  direction: right
+
+  redis: Redis Instance {
+    shape: image
+    icon: https://icons.terrastruct.com/gcp%2FProducts%20and%20services%2FDatabases%2FCloud%20Memorystore.svg
+  }
+  vm2: Host VM {
+    shape: image
+    icon: https://icons.terrastruct.com/gcp%2FProducts%20and%20services%2FCompute%2FCompute%20Engine.svg
+  }
+  vm1: Host VM {
+    shape: image
+    icon: https://icons.terrastruct.com/gcp%2FProducts%20and%20services%2FCompute%2FCompute%20Engine.svg
+  }
+
+  lb: Load Balancer {
+    shape: image
+    icon: https://icons.terrastruct.com/gcp%2FProducts%20and%20services%2FNetworking%2FCloud%20Load%20Balancing.svg
+  }
+
+  private_service_connect: Private Service Connect {
+    shape: image
+    icon: https://icons.terrastruct.com/gcp%2FProducts%20and%20services%2FSecurity%2FKey%20Management%20Service.svg
+  }
+
+  private_service_connect -- vm1: allow_redis
+  private_service_connect -- vm2: allow_redis
+  private_service_connect -- redis
+  lb -- vm1: allow_health_check
+  lb -- vm2: allow_health_check
+}
+
+browser: Browser {
+  shape: image
+  icon: https://icons.terrastruct.com/dev/chrome.svg
+}
+
+ansible: Ansible {
+  shape: image
+  icon: https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ansible_logo.svg/1664px-Ansible_logo.svg.png
+}
+
+browser -- gcp.lb
+ansible -- gcp.vm1: allow_ssh
+ansible -- gcp.vm2: allow_ssh
