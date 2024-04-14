@@ -1,6 +1,6 @@
 ## Prerequisites
 
-**This only works on Linux / WSL, because of the path used in [host-vm.tf](./terraform/host-vm.tf)**
+**This only works on Linux / WSL, because of the path used in [host-vms.tf](./terraform/host-vms.tf)**
 
 ---
 
