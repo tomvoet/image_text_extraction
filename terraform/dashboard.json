@@ -1,0 +1,282 @@
+{
+    "displayName": "Terraform Resources Dashboard",
+    "dashboardFilters": [],
+    "gridLayout": {
+        "columns": 2,
+        "widgets": [
+            {
+                "title": "Uptime",
+                "scorecard": {
+                    "timeSeriesQuery": {
+                        "timeSeriesFilter": {
+                            "filter": "metric.type=\"monitoring.googleapis.com/uptime_check/check_passed\" resource.type=\"uptime_url\"",
+                            "aggregation": {
+                                "perSeriesAligner": "ALIGN_FRACTION_TRUE",
+                                "crossSeriesReducer": "REDUCE_MEAN",
+                                "groupByFields": [],
+                                "alignmentPeriod": "60s"
+                            }
+                        },
+                        "outputFullDuration": true
+                    },
+                    "thresholds": [
+                        {
+                            "value": 0.9,
+                            "targetAxis": "Y1",
+                            "color": "YELLOW",
+                            "direction": "BELOW"
+                        },
+                        {
+                            "value": 0.8,
+                            "targetAxis": "Y1",
+                            "color": "RED",
+                            "direction": "BELOW"
+                        }
+                    ],
+                    "gaugeView": {
+                        "lowerBound": 0,
+                        "upperBound": 1
+                    }
+                }
+            },
+            {
+                "title": "Backend latency [SUM]",
+                "xyChart": {
+                    "chartOptions": {
+                        "mode": "COLOR"
+                    },
+                    "dataSets": [
+                        {
+                            "breakdowns": [],
+                            "dimensions": [],
+                            "measures": [],
+                            "minAlignmentPeriod": "60s",
+                            "plotType": "HEATMAP",
+                            "targetAxis": "Y1",
+                            "timeSeriesQuery": {
+                                "timeSeriesFilter": {
+                                    "aggregation": {
+                                        "alignmentPeriod": "60s",
+                                        "crossSeriesReducer": "REDUCE_SUM",
+                                        "groupByFields": [],
+                                        "perSeriesAligner": "ALIGN_DELTA"
+                                    },
+                                    "filter": "metric.type=\"loadbalancing.googleapis.com/https/backend_latencies\" resource.type=\"https_lb_rule\"",
+                                    "pickTimeSeriesFilter": {
+                                        "direction": "TOP",
+                                        "numTimeSeries": 30,
+                                        "rankingMethod": "METHOD_MEAN"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "thresholds": [],
+                    "yAxis": {
+                        "label": "",
+                        "scale": "LINEAR"
+                    }
+                }
+            },
+            {
+                "title": "Backend Request Count [SUM]",
+                "xyChart": {
+                    "chartOptions": {
+                        "mode": "COLOR"
+                    },
+                    "dataSets": [
+                        {
+                            "breakdowns": [],
+                            "dimensions": [],
+                            "measures": [],
+                            "minAlignmentPeriod": "60s",
+                            "plotType": "LINE",
+                            "targetAxis": "Y1",
+                            "timeSeriesQuery": {
+                                "timeSeriesFilter": {
+                                    "aggregation": {
+                                        "alignmentPeriod": "60s",
+                                        "crossSeriesReducer": "REDUCE_SUM",
+                                        "groupByFields": [],
+                                        "perSeriesAligner": "ALIGN_RATE"
+                                    },
+                                    "filter": "metric.type=\"loadbalancing.googleapis.com/https/backend_request_count\" resource.type=\"https_lb_rule\""
+                                }
+                            }
+                        }
+                    ],
+                    "thresholds": [],
+                    "yAxis": {
+                        "label": "",
+                        "scale": "LINEAR"
+                    }
+                }
+            },
+            {
+                "title": "Instance Count",
+                "scorecard": {
+                    "sparkChartView": {
+                        "sparkChartType": "SPARK_BAR"
+                    },
+                    "thresholds": [],
+                    "timeSeriesQuery": {
+                        "timeSeriesFilter": {
+                            "aggregation": {
+                                "alignmentPeriod": "60s",
+                                "crossSeriesReducer": "REDUCE_SUM",
+                                "groupByFields": [],
+                                "perSeriesAligner": "ALIGN_MEAN"
+                            },
+                            "filter": "metric.type=\"compute.googleapis.com/instance_group/size\" resource.type=\"instance_group\""
+                        }
+                    }
+                }
+            },
+            {
+                "title": "Instance CPU Utilization",
+                "xyChart": {
+                    "chartOptions": {
+                        "mode": "COLOR"
+                    },
+                    "dataSets": [
+                        {
+                            "breakdowns": [],
+                            "dimensions": [],
+                            "legendTemplate": "CPU Utilization",
+                            "measures": [],
+                            "plotType": "LINE",
+                            "targetAxis": "Y1",
+                            "timeSeriesQuery": {
+                                "timeSeriesFilter": {
+                                    "aggregation": {
+                                        "alignmentPeriod": "60s",
+                                        "perSeriesAligner": "ALIGN_MEAN"
+                                    },
+                                    "filter": "metric.type=\"compute.googleapis.com/instance/cpu/utilization\" resource.type=\"gce_instance\""
+                                }
+                            }
+                        }
+                    ],
+                    "thresholds": [],
+                    "yAxis": {
+                        "label": "utilization",
+                        "scale": "LINEAR"
+                    }
+                }
+            },
+            {
+                "title": "Instance Disk Read Operations",
+                "xyChart": {
+                    "chartOptions": {
+                        "mode": "COLOR"
+                    },
+                    "dataSets": [
+                        {
+                            "breakdowns": [],
+                            "dimensions": [],
+                            "legendTemplate": "Disk Read Ops",
+                            "measures": [],
+                            "plotType": "LINE",
+                            "targetAxis": "Y1",
+                            "timeSeriesQuery": {
+                                "timeSeriesFilter": {
+                                    "aggregation": {
+                                        "alignmentPeriod": "60s",
+                                        "perSeriesAligner": "ALIGN_RATE"
+                                    },
+                                    "filter": "metric.type=\"compute.googleapis.com/instance/disk/read_ops_count\" resource.type=\"gce_instance\""
+                                }
+                            }
+                        }
+                    ],
+                    "thresholds": [],
+                    "yAxis": {
+                        "label": "operations per second",
+                        "scale": "LINEAR"
+                    }
+                }
+            },
+            {
+                "title": "Instance Network Received Bytes",
+                "xyChart": {
+                    "chartOptions": {
+                        "mode": "COLOR"
+                    },
+                    "dataSets": [
+                        {
+                            "breakdowns": [],
+                            "dimensions": [],
+                            "legendTemplate": "Network Received",
+                            "measures": [],
+                            "plotType": "LINE",
+                            "targetAxis": "Y1",
+                            "timeSeriesQuery": {
+                                "timeSeriesFilter": {
+                                    "aggregation": {
+                                        "alignmentPeriod": "60s",
+                                        "perSeriesAligner": "ALIGN_RATE"
+                                    },
+                                    "filter": "metric.type=\"compute.googleapis.com/instance/network/received_bytes_count\" resource.type=\"gce_instance\""
+                                }
+                            }
+                        }
+                    ],
+                    "thresholds": [],
+                    "yAxis": {
+                        "label": "bytes per second",
+                        "scale": "LINEAR"
+                    }
+                }
+            },
+            {
+                "title": "Redis Cache Hits",
+                "xyChart": {
+                    "chartOptions": {
+                        "mode": "COLOR"
+                    },
+                    "dataSets": [
+                        {
+                            "legendTemplate": "Cache Hits per second",
+                            "minAlignmentPeriod": "60s",
+                            "plotType": "LINE",
+                            "targetAxis": "Y1",
+                            "timeSeriesQuery": {
+                                "timeSeriesFilter": {
+                                    "aggregation": {
+                                        "alignmentPeriod": "60s",
+                                        "crossSeriesReducer": "REDUCE_SUM",
+                                        "groupByFields": [],
+                                        "perSeriesAligner": "ALIGN_RATE"
+                                    },
+                                    "filter": "metric.type=\"redis.googleapis.com/stats/keyspace_hits\" resource.type=\"redis_instance\""
+                                }
+                            }
+                        },
+                        {
+                            "legendTemplate": "Cache Misses per second",
+                            "minAlignmentPeriod": "60s",
+                            "plotType": "LINE",
+                            "targetAxis": "Y1",
+                            "timeSeriesQuery": {
+                                "timeSeriesFilter": {
+                                    "aggregation": {
+                                        "alignmentPeriod": "60s",
+                                        "crossSeriesReducer": "REDUCE_SUM",
+                                        "groupByFields": [],
+                                        "perSeriesAligner": "ALIGN_RATE"
+                                    },
+                                    "filter": "metric.type=\"redis.googleapis.com/stats/keyspace_misses\" resource.type=\"redis_instance\""
+                                }
+                            }
+                        }
+                    ],
+                    "thresholds": [],
+                    "yAxis": {
+                        "label": "",
+                        "scale": "LINEAR"
+                    }
+                }
+            }
+        ]
+    }
+}

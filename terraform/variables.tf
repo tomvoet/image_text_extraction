@@ -7,7 +7,7 @@ variable "user" {
   description = "The current user of this machine"
   type = string
 }
-# gcp
+
 variable "region" {
   description = "The region to deploy resources"
   type = string

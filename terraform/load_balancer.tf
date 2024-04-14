@@ -18,8 +18,9 @@ resource "google_compute_instance_group" "host_vms" {
 }
 
 resource "google_compute_backend_service" "host_vm_backend_service" {
-  name          = "host-vm-backend-service"
-  protocol      = "HTTP"
+  name     = "host-vm-backend-service"
+  protocol = "HTTP"
+
   health_checks = [google_compute_health_check.http.self_link]
 
   backend {
