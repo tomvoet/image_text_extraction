@@ -3,6 +3,7 @@ import redisDriver from "unstorage/drivers/redis"
 export default defineNitroPlugin(() => {
     const storage = useStorage()
   
+    // Mount the (env var driven) Redis driver only in production
     if (process.env.NODE_ENV === "production") {
       const driver = redisDriver({
         base: "redis",

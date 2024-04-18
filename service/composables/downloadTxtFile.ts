@@ -1,3 +1,4 @@
+// Download text file from the extracted text
 export const downloadTxtFile = (text: string) => {
     const element = document.createElement('a')
     const file = new Blob([text], { type: 'text/plain' })

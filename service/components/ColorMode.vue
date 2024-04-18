@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const colorMode = useColorMode()
+
+// Computed property to determine if the current color mode is dark
 const isDark = computed({
     get() {
         return colorMode.value === 'dark'

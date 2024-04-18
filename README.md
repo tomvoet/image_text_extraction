@@ -1,6 +1,7 @@
 ## Prerequisites
 
 **This only works on Linux / WSL, because of the path used in [host-vms.tf](./terraform/host-vms.tf)**
+**If used on MacOS, please change the path in the file [host-vms.tf](./terraform/host-vms.tf) to the correct path**
 
 ---
 

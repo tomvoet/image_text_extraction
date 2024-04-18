@@ -12,9 +12,11 @@ export default defineEventHandler(async (event) => {
 
     const key = hash(data)
 
+    // Check if the item is cached
     const cachedText = await redis.getItem(key)
 
     if (cachedText) {
+        // Create an instantly closing stream with the cached text
         const stream = new ReadableStream({
             start(controller) {
                 controller.enqueue(cachedText)
@@ -25,6 +27,7 @@ export default defineEventHandler(async (event) => {
         return sendStream(event, stream)
     }
 
+    // Get variables from environment
     const config = useRuntimeConfig()
 
     const { project_id, private_key_id, private_key, client_email, client_id, universe_domain } = config
@@ -43,6 +46,7 @@ export default defineEventHandler(async (event) => {
         }
     }})
 
+    // Create config for the vertexAi model
     const model = vertexAi.preview.getGenerativeModel({
         model: visionModel,
         generation_config: {
@@ -67,6 +71,7 @@ export default defineEventHandler(async (event) => {
         ]
     })
 
+    // Set up the request body & prompt
     const reqBody = {
         contents: [
             {
@@ -86,10 +91,10 @@ export default defineEventHandler(async (event) => {
         ]
     }
 
+    // Fetch the response stream
     const res = await model.generateContentStream(reqBody)
 
-    
-
+    // Transform into a readable stream
     const stream = new ReadableStream({
         async start(controller) {
             for await (const chunk of res.stream) {
@@ -109,6 +114,7 @@ export default defineEventHandler(async (event) => {
         },
     })
 
+    // Extract the text from the response and cache it
     res.response.then((response) => {
         const text = response.candidates.reduce((acc, candidate) => {
             return acc + candidate.content.parts.reduce((acc, part) => {

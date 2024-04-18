@@ -15,6 +15,7 @@ const extractText = async () => {
     const mimeType = file.value.type
     const base64 = await toBase64(file.value)
 
+    // Remove the data URL prefix to get the base64 data
     const data = base64.replace(/^data:image\/(png|jpeg|jpg);base64,/, '')
 
     const stream = await $fetch<ReadableStream>("/api/extract", {
@@ -28,6 +29,7 @@ const extractText = async () => {
 
     const reader = stream.getReader()
 
+    // Read the stream until it's done
     while (true) {
       const { done, value } = await reader.read()
 

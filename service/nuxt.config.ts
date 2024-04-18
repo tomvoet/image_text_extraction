@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     "redis_password": "",
   },
   nitro: {
+    // Redis setup for development
     devStorage: {
       redis: {
         driver: "redis",

@@ -1,3 +1,13 @@
+/**
+ * This Terraform configuration defines a Google Compute Engine instance resource.
+ * It creates two instances of the specified machine type in the given zone.
+ * The instances are created with a boot disk initialized with a Debian 12 image.
+ * The instances have SSH access, Redis client, and HTTP server tags.
+ * The instances are labeled with "google-ec-src=terraform".
+ * The SSH key for the specified user is added to the instance metadata.
+ * The instances are connected to the specified VPC network.
+ */
+
 resource "google_compute_instance" "host_vm" {
   count        = 2
   name         = "host-vm-${count.index}"

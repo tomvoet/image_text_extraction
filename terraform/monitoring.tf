@@ -1,8 +1,13 @@
+# This file contains the resources for monitoring the resources created by the terraform script.
+
+# The `google_monitoring_dashboard` resource defines a dashboard named "terraform-resources-dashboard" that displays the metrics of the resources created by the terraform script.
+# The dashboard configuration is read from the `dashboard.json` file.
 resource "google_monitoring_dashboard" "terraform_resources_dashboard" {
   project        = var.project_id
   dashboard_json = file("${path.module}/dashboard.json")
 }
 
+# The `google_monitoring_uptime_check_config` resource defines an uptime check named "terraform-resources-uptime-check" that checks the health of the load balancer created by the terraform script.
 resource "google_monitoring_uptime_check_config" "terraform_resources_uptime_check" {
   project      = var.project_id
   display_name = "terraform-resources-uptime-check"

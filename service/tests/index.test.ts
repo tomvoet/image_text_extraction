@@ -2,6 +2,7 @@ import { describe, expect, it,  } from "vitest"
 import { setup, $fetch, isDev } from '@nuxt/test-utils'
 import { fileURLToPath } from "url"
 
+// Set up nuxt server and test index.vue rendering
 describe("Main Page", async () => {
     await setup({
         rootDir: fileURLToPath(new URL('..', import.meta.url)),

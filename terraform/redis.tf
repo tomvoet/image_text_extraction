@@ -1,3 +1,5 @@
+# Redis instance used for caching.
+# Is secured by a utilizing a private service connection.
 resource "google_redis_instance" "redis" {
     name = "image-text-extraction-redis"
     tier = "BASIC"

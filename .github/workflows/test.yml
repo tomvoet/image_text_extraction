@@ -3,8 +3,6 @@ name: Build and Test Service
 permissions:
   contents: read
 
-# run pnpm test in ./service
-
 on:
   push:
     branches:
